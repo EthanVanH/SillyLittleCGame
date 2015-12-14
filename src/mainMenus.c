@@ -2,17 +2,29 @@
 #include <stdlib.h>
 #include <ncurses.h>
 
-int mainMenu()
+/*Variables needed by following functions, changes to them allow easy menu manipulation*/
+#define WIDTH 30
+#define HEIGHT 10
+
+char *choices[] = {
+	"Play",
+	"Load",
+	"Stats",
+	"Options",
+	"Exit",
+};
+int menuChoices = sizeof(choices)/ sizeof(char*);
+
+	
+extern int mainMenu()
 {
 	WINDOW *menus;
 	int highlight;
-	int choice;
 	int xVal;
 	int yVal;
 	int input;
 
 	highlight = 1;
-	choice = 0;
 	xVal = (80 - WIDTH)/2;
 	yVal = (24 - HEIGHT)/2;
 
@@ -20,13 +32,15 @@ int mainMenu()
 	clear();
 	noecho();
 	cbreak();
+	curs_set(0);
 
 	menus = newwin(HEIGHT, WIDTH, yVal, xVal);
-	keyboard(menus,TRUE);
+	keypad(menus,TRUE);
 	refresh();
 
+	printMenu(menus,highlight);
 	/*Main menu loop*/
-	while(1)
+	while(input != highlight)
 	{
 		input = wgetch(menus);
 		switch(input)
@@ -51,15 +65,13 @@ int mainMenu()
 					highlight++;
 				}
 				break;
+			case 10:
+				input = highlight;
 			default:
 				/*laugh at the users inadequacy*/
 				break;
 		}
 		printMenu(menus,highlight);
-		if(input != 0)
-		{
-			break;
-		}
 	}
 
 	clrtoeol();
@@ -71,7 +83,7 @@ int mainMenu()
 
 }
 
-void printMenu(WINDOW *menus,int highlight)
+extern void printMenu(WINDOW *menus,int highlight)
 {
 	int x;
 	int y;
@@ -87,14 +99,15 @@ void printMenu(WINDOW *menus,int highlight)
 		if(highlight ==i+1)
 		{
 			wattron(menus,A_REVERSE);
-			mvprintw(menus,y,x, "%s",choices[i]);
+			mvwprintw(menus,y,x, "%s",choices[i]);
 			wattroff(menus,A_REVERSE);
 		}
 		else
 		{
-			mvprintw(menus,y,x,"%s",choices[i]);
-			y++;
+			mvwprintw(menus,y,x,"%s",choices[i]);
 		}	
-	}
+		y++;
+		wrefresh(menus);
 
+	}
 }

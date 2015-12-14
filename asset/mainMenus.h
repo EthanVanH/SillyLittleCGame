@@ -1,18 +1,6 @@
 #ifndef menusused
 #define menusused
-
-#define WIDTH 30
-#define HEIGHT 30
-
-/*Variables needed by following functions, changes to them allow easy menu manipulation*/
-char *choices[] = {
-	"Play"
-	"Load"
-	"Stats"
-	"Options"
-	"Exit"
-};
-int menuChoices = sizeof(choices)/ sizeof(char*);
+#include <ncurses.h>
 
 
 /*This function is a wrapper for all menus outside of the main game
@@ -24,12 +12,12 @@ int menuChoices = sizeof(choices)/ sizeof(char*);
 *	2: **
 *	3: **
 */
-int mainMenu();
+extern int mainMenu();
 
 /* This function is responsible for updating the information displayed on the screen
 * The arguments are the window to be updated and an integer representing which menu choice is highlighted
 * void return
 */
-void printMenu(WINDOW *menus,int highlight);
+extern void printMenu(WINDOW *menus,int highlight);
 
 #endif
