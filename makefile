@@ -2,7 +2,7 @@ FLAGS = -std=c99 -Wall -pedantic -Iasset
 
 #executeable
 slcg.out: mainMenus.o
-	gcc $(FLAGS) slcg.c mainMenus.o -lncurses -o slgc.out -lm
+	gcc $(FLAGS) slcg.c mainMenus.o -lncurses -o slcg.out -lm
 
 #.o compilation
 mainMenus.o: src/mainMenus.c

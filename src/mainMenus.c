@@ -79,7 +79,7 @@ extern int mainMenu()
 	getch();
 	endwin();
 	
-	return 0;
+	return input;
 
 }
 
